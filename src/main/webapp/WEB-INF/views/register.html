@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>New</title>
+    <title>Registration</title>
 </head>
 <body>
-<form th:method="POST" th:action="@{/admin/users}" th:object="${user}">
+<form th:method="POST" th:action="@{/auth/register}" th:object="${user}">
     <label for="name">Enter name: </label>
     <input type="text" th:field="*{name}" id="name"/>
 
@@ -28,6 +28,6 @@
     <input type="submit" value="Register!"/>
 </form>
 <br/>
-<a th:href="@{/auth/logout}" th:text="Logout">VAlUE</a>
+<a th:href="@{/auth/login}" th:text="Login">VAlUE</a>
 </body>
 </html>

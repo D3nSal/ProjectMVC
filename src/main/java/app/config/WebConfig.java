@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+
 public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
@@ -22,9 +23,9 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
     }
 
     @Override
-    public void onStartup(ServletContext aServletContext) throws ServletException {
-        super.onStartup(aServletContext);
-        registerHiddenFieldFilter(aServletContext);
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        super.onStartup(servletContext);
+        registerHiddenFieldFilter(servletContext);
     }
 
     private void registerHiddenFieldFilter(ServletContext aContext) {

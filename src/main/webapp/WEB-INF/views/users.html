@@ -4,11 +4,12 @@
 </head>
 <body>
 <div th:each="user : ${users}">
-    <a th:href="@{/users/{id}(id=${user.getId})}" th:text="${user.getName() + ' ' + user.getLastName()}">VALUE</a>
+    <a th:href="@{/admin/users/{id}(id=${user.getId})}" th:text="${user.getName() + ' ' + user.getLastName()}">VALUE</a>
 </div>
 <br/>
-<form th:action="@{/users/new}">
+<form th:action="@{/admin/users/new}">
     <button>Add new user</button>
 </form>
+<a th:href="@{/auth/logout}" th:text="Logout">VAlUE</a>
 </body>
 </html>

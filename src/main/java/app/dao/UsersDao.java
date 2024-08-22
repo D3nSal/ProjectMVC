@@ -1,12 +1,16 @@
 package app.dao;
 
-import jakarta.persistence.EntityManager;
+
+import app.models.Role;
 import app.models.User;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class UsersDao {
@@ -21,6 +25,9 @@ public class UsersDao {
 
     @Transactional
     public void saveUser(User user){
+        Role defaultRole = new Role("ROLE_USER");
+        defaultRole.setUser(user);
+        user.setRoles(new ArrayList<>(Collections.singletonList(defaultRole)));
         em.persist(user);
     }
 
@@ -28,6 +35,13 @@ public class UsersDao {
     public User getUserById(int id){
         return em.find(User.class, id);
     }
+
+    @Transactional(readOnly = true)
+    public Optional<User> getUserByUsername(String username){
+        User user = (User) em.createQuery("from User where email = :username").setParameter("username", username).getSingleResult();
+        return Optional.ofNullable(user);
+    }
+
 
     @Transactional
     public void updateUser(User user, int id){
@@ -41,7 +55,10 @@ public class UsersDao {
     @Transactional
     public void deleteUser(int id){
         User user = getUserById(id);
+        user.getRoles().forEach(role -> em.remove(role));
+        user.getRoles().clear();
         em.remove(user);
     }
+
 
 }
